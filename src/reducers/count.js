@@ -1,6 +1,6 @@
 import { INCREMENT, DECREMENT } from '../actions'
 
-const intialState = {
+const initialState = {
     value: 0
 }
 
