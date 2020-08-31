@@ -1,0 +1,45 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import _ from 'lodash'
+
+import { readEvents } from '../actions'
+
+class EventsIndex extends Component {
+  componentDidMount() {
+    this.props.readEvents();
+  }
+
+  renderEvents() {
+    return _.map(this.props.events, event => (
+      <tr key={event.id}>
+        <td>{event.id}</td>
+        <td>{event.title}</td>
+        <td>{event.body}</td>
+      </tr>
+    ))
+  }
+
+  render() {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Body</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.renderEvents()}
+        </tbody>
+      </table>
+    )
+  }
+}
+
+// ReduxのStoreを第一引き数に取り、ComponentにPropsとして渡すものをフィルタリングする。
+const mapStateToProps = state => ({ events: state.events })
+// ReduxのDispatchを第一引き数に取る関数で、変更を伝えるアクションを作成する。
+const mapDispatchToProps = ({ readEvents })
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventsIndex)
